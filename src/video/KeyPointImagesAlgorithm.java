@@ -1,36 +1,20 @@
 package video;
 
-import java.util.List;
+import org.bytedeco.javacpp.opencv_core.Mat;
+import org.bytedeco.javacpp.opencv_features2d;
+import org.bytedeco.javacpp.opencv_features2d.KeyPoint;
+import org.bytedeco.javacpp.opencv_nonfree.SURF;
 
-import org.opencv.core.Mat;
-import org.opencv.core.MatOfKeyPoint;
-import org.opencv.core.Scalar;
-import org.opencv.features2d.FeatureDetector;
-import org.opencv.features2d.Features2d;
-import org.opencv.features2d.KeyPoint;
 
 public class KeyPointImagesAlgorithm {
 
-	public Mat drawAllKeypoints(Mat source, int quantity){
-		MatOfKeyPoint matOfKeyPoints = new MatOfKeyPoint();
-	    FeatureDetector blobDetector = FeatureDetector.create(FeatureDetector.SURF);
-	    blobDetector.detect(source, matOfKeyPoints);
-	    List<KeyPoint> list = matOfKeyPoints.toList();
-		Scalar[] colors = new Scalar[]{
-			new Scalar(256, 0, 0), new Scalar(128, 0, 0), new Scalar(0, 256, 0), new Scalar(0, 128, 0),
-			new Scalar(0, 0, 256), new Scalar(0, 0, 128), new Scalar(256, 256, 0), new Scalar(0, 256, 256),
-			new Scalar(256, 0, 256), new Scalar(256, 256, 256)
-		};
-		int loops = colors.length;
+	public Mat drawAllKeypoints(Mat source){
+		KeyPoint keyPoint = new KeyPoint();
+		SURF surf = new SURF(2500d, 4, 2, true, true);
 		Mat result = new Mat();
-		source.copyTo(result);
-		System.out.println(list.size());
-		for (int i = 0; i < loops && i  * quantity <= list.size() ; i++) {
-			List<KeyPoint> subList = list.subList(i * quantity, (i + 1) * quantity);
-			MatOfKeyPoint mat = new MatOfKeyPoint();
-			mat.fromList(subList);
-			Features2d.drawKeypoints(result, mat, result, colors[i % colors.length], Features2d.DRAW_RICH_KEYPOINTS);
-		}
+		surf.detect(source, keyPoint);
+		//opencv_features2d.drawKeypoints(source, keyPoint, result);
+		opencv_features2d.drawKeypoints(source, keyPoint, source);
 	    return result;	
 	}
 }
