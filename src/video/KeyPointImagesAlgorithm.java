@@ -14,7 +14,14 @@ public class KeyPointImagesAlgorithm {
 		Mat result = new Mat();
 		surf.detect(source, keyPoint);
 		//opencv_features2d.drawKeypoints(source, keyPoint, result);
-		opencv_features2d.drawKeypoints(source, keyPoint, source);
+		opencv_features2d.drawKeypoints(source, keyPoint, result);
 	    return result;	
+	}
+	
+	public void drawAllKeypoints1(Mat source){
+		KeyPoint keyPoint = new KeyPoint();
+		SURF surf = new SURF(2500d, 4, 2, true, true);
+		surf.detect(source, keyPoint);
+		opencv_features2d.drawKeypoints(source, keyPoint, source);	
 	}
 }

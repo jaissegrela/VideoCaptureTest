@@ -4,7 +4,6 @@ import java.io.File;
 
 import org.bytedeco.javacpp.opencv_core.Mat;
 import org.bytedeco.javacpp.opencv_highgui.VideoCapture;
-import org.bytedeco.javacpp.opencv_highgui.VideoWriter;
 import org.opencv.core.Core;
 
 public class ReadingVideo_OpencvTest {
